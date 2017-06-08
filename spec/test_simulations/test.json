@@ -1,0 +1,74 @@
+{
+	"response": {
+		"status": 200,
+		"body": "You have successfully imported this simulation",
+		"encodedBody": false,
+		"headers": {
+			"Adrum_0": [
+				"clientRequestGUID:79e9edb6-eef1-4c12-9b54-8ae62c55f556"
+			],
+			"Adrum_1": [
+				"btId:310285"
+			],
+			"Adrum_2": [
+				"btERT:30"
+			],
+			"Adrum_3": [
+				"serverSnapshotType:f"
+			],
+			"Cache-Control": [
+				"no-cache, no-store, max-age=0, must-revalidate"
+			],
+			"Expires": [
+				"0"
+			],
+			"Hoverfly": [
+				"Was-Here"
+			],
+			"Pragma": [
+				"no-cache"
+			],
+			"Request-Id": [
+				"eqbzeztv"
+			],
+			"Strict-Transport-Security": [
+				"max-age=31536000 ; includeSubDomains"
+			],
+			"Transfer-Encoding": [
+				"chunked"
+			],
+			"X-Application-Context": [
+				"application:uat:8889"
+			],
+			"X-Content-Type-Options": [
+				"nosniff"
+			],
+			"X-Frame-Options": [
+				"DENY"
+			],
+			"X-Xss-Protection": [
+				"1; mode=block"
+			]
+		}
+	},
+	"request": {
+		"path": {
+			"exactMatch": "/test"
+		},
+		"method": {
+			"exactMatch": "GET"
+		},
+		"destination": {
+			"exactMatch": "test.com"
+		},
+		"scheme": {
+			"exactMatch": "http"
+		},
+		"query": {
+			"exactMatch": ""
+		},
+		"body": {
+			"exactMatch": ""
+		}
+	}
+}
