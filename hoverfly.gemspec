@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'Ruby wrapper for Hoverfly'
   spec.description   = 'Use this library to interact with Hoverfly in ruby'
-  spec.homepage      = 'https://github.com/automation-wizards'
+  spec.homepage      = 'https://github.com/automation-wizards/hoverfly'
   spec.license       = 'MIT'
 
   spec.files         = Dir['LICENSE', 'README.md', 'lib/**/*']
