@@ -23,7 +23,7 @@ Or install it yourself as:
 This gem gives you full access to the Hoverfly API as well as the ability to spin up and tear down different Hoverfly instances. See below for examples, as well as a reference of the actions that can be done
 
 ### Recording an API response
-```
+```ruby
 require 'hoverfly'
 
 Hoverfly.start('test')
@@ -42,7 +42,7 @@ file.close
 Hoverfly.stop
 ```
 ### Replaying an existing API response
-```
+```ruby
 require 'hoverfly'
 
 Hoverfly.start('test')
