@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = 'hoverfly'
-  spec.version       = '0.0.3'
+  spec.version       = '0.0.4'
   spec.authors       = ['Automation Wizards']
   spec.email         = ['bjorn.ramroop@loblaw.ca']
 

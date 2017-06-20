@@ -26,7 +26,8 @@ This gem gives you full access to the Hoverfly API as well as the ability to spi
 ```ruby
 require 'hoverfly'
 
-Hoverfly.start('test')
+# Start Hoverfly as a proxy
+Hoverfly.start('test', 'proxy')
 
 # Set Hoverfly to capture mode
 Hoverfly.update_mode('capture')
@@ -45,6 +46,7 @@ Hoverfly.stop
 ```ruby
 require 'hoverfly'
 
+# Start Hoverfly as a webserver
 Hoverfly.start('test')
 
 # Set Hoverfly to simulate mode
@@ -54,7 +56,7 @@ Hoverfly.update_mode('simulate')
 Hoverfly.import(['simulation.json'])
 
 # Now when we make the API call, we will get the response that we imported into Hoverfly
-`curl --proxy http://localhost:8500 http://time.jsontest.com `
+`curl http://localhost:8500`
 
 Hoverfly.stop
 ```
@@ -62,9 +64,10 @@ Hoverfly.stop
 ### Available Methods
 | Method | Description | Example |
 |--------|-------------|---------|
-|start(tag, ports)|This method starts up a new instance of Hoverfly. It takes in a tag, which is required, as well as an optional hash which allows you to specify the admin and proxy ports. If no hash is specified, then the default admin port (8888) and proxy port (8500) are used.| Hoverfly.start('test', {admin: 9000, proxy: 9001}|
+|start(tag, mode, ports)|This method starts up a new instance of Hoverfly. It takes in a tag, which is required, an optional mode, as well as keyword arguments that allow you to specify the admin and proxy ports. If no mode is specified, Hoverfly will start in webserver mode by default. If no hash is specified, then the default admin port (8888) and proxy port (8500) are used.| Hoverfly.start('test', 'proxy', admin: 9000, proxy: 9001)|
 |get_current_simulations|Returns the current simulation being used by Hoverfly|Hoverfly.get_current_simulations|
 |get_current_simulation_schema|Returns the schema of the simulations currently being used by Hoverfly|Hoverfly.get_current_simulation_schema|
+|import(file_list)|Compiles the given files into a simulation JSON file, and then sets that file as the simulation to be used by Hoverfly|Hoverfly.import(['./login.json', './logout.json'])|
 |get_config_info|Returns Hoverfly configuration info|Hoverfly.get_config_info|
 |get_current_destination|Returns the current destination that has been set for Hoverfly. Once a destination has been set, Hoverfly only intercepts traffic for that URL|Hoverfly.get_current_destination|
 |update_destinitation|Sets / updates the destination URL that Hoverfly looks at|Hoverfly.update_destination('http://time.jsontest.com')|
