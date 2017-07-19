@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    hoverfly (0.0.4)
+    hoverfly (0.0.5)
       httparty (>= 0.13.7)
 
 GEM
@@ -42,4 +42,4 @@ DEPENDENCIES
   rspec (>= 3.4.0)
 
 BUNDLED WITH
-   1.15.1
+   1.15.2

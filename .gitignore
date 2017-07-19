@@ -1,2 +1,6 @@
 *.gem
 .rubocop.yml
+
+# IDE artifacts
+.vscode
+.idea

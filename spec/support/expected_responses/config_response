@@ -1,0 +1,1 @@
+{"destination":".","middleware":{"binary":"","script":"","remote":""},"mode":"simulate","arguments":{"matchingStrategy":"strongest"},"usage":{"counters":{"capture":0,"modify":0,"simulate":0,"synthesize":0}},"version":"v0.13.0","upstream-proxy":""}
