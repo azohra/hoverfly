@@ -2,29 +2,14 @@ class Hoverfly
   extend HoverflyAPI
 
   class << self
-    attr_reader :target
+    attr_reader :admin_port, :proxy_port
 
-    def start(target, mode = 'webserver', **ports)
-      @target = target
-      admin_port = ports.fetch(:admin, 8888)
-      proxy_port = ports.fetch(:proxy, 8500)
-      puts "Starting target #{target} with admin #{admin_port} and proxy #{proxy_port}"
-      system "hoverctl targets create #{@target}"
-      if mode == 'proxy'
-        system "hoverctl start --admin-port #{admin_port} --proxy-port #{proxy_port} -t #{@target}"
-      else
-        system "hoverctl start webserver --admin-port #{admin_port} --proxy-port #{proxy_port} -t #{@target}"
-        puts "Unknown Hoverfly mode \"#{mode}\". Starting in webserver mode" if mode != 'webserver'
-      end
+    def set_ports(admin:, proxy:)
+      @admin_port = admin
+      @proxy_port = proxy
       HoverflyAPI.default_options.update(verify: false)
       HoverflyAPI.format :json
-      HoverflyAPI.base_uri "http://localhost:#{admin_port}"
-    end
-
-    def stop
-      puts "Stopping target #{Hoverfly.target} with base URL #{HoverflyAPI.base_uri}"
-      system "hoverctl stop -t #{@target}"
-      system "hoverctl targets delete #{@target} -f"
+      HoverflyAPI.base_uri "http://localhost:#{@admin_port}"
     end
 
     def middleware(middleware_location)
@@ -38,22 +23,13 @@ class Hoverfly
     private
 
     def to_simulation(file_list, meta)
-      header_path = meta[:header] || File.expand_path('schema_metadata/header.json', __dir__)
-      footer_path = meta[:footer] || File.expand_path('schema_metadata/footer.json', __dir__)
-      header = File.open(header_path)
-      footer = File.open(footer_path)
-      mock = header.read
-      all_simulations = file_list.map do |filename|
-        file = File.open(filename)
-        simulation = file.read
-        file.close
-        simulation
-      end
-      mock << all_simulations.join(',')
-      mock << footer.read
-      header.close
-      footer.close
-      mock
+      schema_path = meta[:schema] || File.expand_path('schema_metadata/schema.json.erb', __dir__)
+      all_simulations = file_list.map { |filename| File.read(filename) }
+      erb(File.read(schema_path)) { all_simulations.join(',') }
+    end
+
+    def erb(template)
+      ERB.new(template).result(binding)
     end
   end
 end

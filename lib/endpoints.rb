@@ -18,11 +18,11 @@ module HoverflyAPI
   end
 
   def get_current_destination
-    HoverflyAPI.get(' /api/v2/hoverfly/destination').response.body
+    HoverflyAPI.get('/api/v2/hoverfly/destination').response.body
   end
 
-  def update_destinitation(destination)
-    HoverflyAPI.put(' /api/v2/hoverfly/destination', headers: { 'Content-Type' => 'application/json' }, body: { destination: destination }.to_json).response.body
+  def update_destination(destination)
+    HoverflyAPI.put('/api/v2/hoverfly/destination', headers: { 'Content-Type' => 'application/json' }, body: { destination: destination }.to_json).response.body
   end
 
   def get_current_middleware
