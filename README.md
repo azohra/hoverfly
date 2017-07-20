@@ -20,14 +20,24 @@ Or install it yourself as:
 
 ## Usage
 
-This gem gives you full access to the Hoverfly API as well as the ability to spin up and tear down different Hoverfly instances. See below for examples, as well as a reference of the actions that can be done
+This gem gives you full access to the Hoverfly API as well as the ability to dynamically build simulations to import into Hoverfly. See below for examples, as well as a reference of the actions that can be done.
+
+This gem assumes that you have already started a running instance of Hoverfly. This can be done in multiple ways. For example, you can install Hoverfly on your host system and start it by executing:
+
+    $ hoverctl start
+    
+Alternatively, you can start Hoverfly in a docker container and expose the Hoverfly admin and proxy ports to the host system as. If you have a docker image named `hoverfly` with Hoverfly already installed, then you can do this as follows:
+
+    $ docker run -d -p 8888:8888 -p 8500:8500 --name hoverfly hoverfly
+
+The following examples assume that you have already started a Hoverfly instance (docker or otherwise) with the default admin and proxy ports (8888 and 8500 respectively)
 
 ### Recording an API response
 ```ruby
 require 'hoverfly'
 
-# Start Hoverfly as a proxy
-Hoverfly.start('test', 'proxy')
+# Specify the ports to be used to communicate with Hoverfly
+Hoverfly.set_ports(admin: 8888, proxy: 8500)
 
 # Set Hoverfly to capture mode
 Hoverfly.update_mode('capture')
@@ -39,15 +49,13 @@ Hoverfly.update_mode('capture')
 file = File.open( "simulation.json", "w" )
 file << Hoverfly.get_current_simulations
 file.close
-
-Hoverfly.stop
 ```
 ### Replaying an existing API response
 ```ruby
 require 'hoverfly'
 
-# Start Hoverfly as a webserver
-Hoverfly.start('test')
+# Specify the ports to be used to communicate with Hoverfly
+Hoverfly.set_ports(admin: 8888, proxy: 8500)
 
 # Set Hoverfly to simulate mode
 Hoverfly.update_mode('simulate')
@@ -56,15 +64,12 @@ Hoverfly.update_mode('simulate')
 Hoverfly.import(['simulation.json'])
 
 # Now when we make the API call, we will get the response that we imported into Hoverfly
-`curl http://localhost:8500`
-
-Hoverfly.stop
+`curl --proxy http://localhost:8500 http://time.jsontest.com`
 ```
 
 ### Available Methods
 | Method | Description | Example |
 |--------|-------------|---------|
-|start(tag, mode, ports)|This method starts up a new instance of Hoverfly. It takes in a tag, which is required, an optional mode, as well as keyword arguments that allow you to specify the admin and proxy ports. If no mode is specified, Hoverfly will start in webserver mode by default. If no hash is specified, then the default admin port (8888) and proxy port (8500) are used.| Hoverfly.start('test', 'proxy', admin: 9000, proxy: 9001)|
 |get_current_simulations|Returns the current simulation being used by Hoverfly|Hoverfly.get_current_simulations|
 |get_current_simulation_schema|Returns the schema of the simulations currently being used by Hoverfly|Hoverfly.get_current_simulation_schema|
 |import(file_list)|Compiles the given files into a simulation JSON file, and then sets that file as the simulation to be used by Hoverfly|Hoverfly.import(['./login.json', './logout.json'])|
@@ -81,7 +86,6 @@ Hoverfly.stop
 |get_cached_data|Returns data that Hoverfly has cached|Hoverfly.get_cached_data|
 |clear_cached_data|Clears the Hoverfly cache|Hoverfly.clear_cached_data|
 |get_logs|Returns the Hoverfly logs|Hoverfly.get_logs|
-|stop|Kills the current instance of Hoverfly. This shuts down Hoverfly and deletes the tag used to start that instance. Once Hoverfly is stopped, the tag can be reused|Hoverfly.stop|
 
 ## Contributing
 
