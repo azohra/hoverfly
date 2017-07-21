@@ -10,15 +10,35 @@ class Hoverfly
       proxy_port = ports.fetch(:proxy, 8500)
       puts "Starting target #{target} with admin #{admin_port} and proxy #{proxy_port}"
       system "hoverctl targets create #{@target}"
-      if mode == 'proxy'
-        system "hoverctl start --admin-port #{admin_port} --proxy-port #{proxy_port} -t #{@target}"
+      stdout_err, status = if mode == 'proxy'
+        Open3.capture2e(
+          "hoverctl", 
+          "start", 
+          "--admin-port", 
+          "#{admin_port}", 
+          "--proxy-port", 
+          "#{proxy_port}", 
+          "-t", 
+          "#{@target}"
+        )
       else
-        system "hoverctl start webserver --admin-port #{admin_port} --proxy-port #{proxy_port} -t #{@target}"
         puts "Unknown Hoverfly mode \"#{mode}\". Starting in webserver mode" if mode != 'webserver'
+        Open3.capture2e(
+          "hoverctl", 
+          "start", 
+          "webserver", 
+          "--admin-port", 
+          "#{admin_port}", 
+          "--proxy-port", 
+          "#{proxy_port}", 
+          "-t", 
+          "#{@target}"
+          )
       end
       HoverflyAPI.default_options.update(verify: false)
       HoverflyAPI.format :json
       HoverflyAPI.base_uri "http://localhost:#{admin_port}"
+      stdout_err.include?('Hoverfly is now running as a webserver') && status.success?
     end
 
     def stop
