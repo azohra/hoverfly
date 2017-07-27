@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 describe 'The Hoverfly API' do
   context 'Cache' do
     it 'Clears the cache' do

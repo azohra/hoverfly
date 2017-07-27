@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 describe 'Hoverfly Control Gem' do
   context 'used as a webserver' do
     it 'successfully imports a simulation' do
@@ -12,7 +10,7 @@ describe 'Hoverfly Control Gem' do
       rd, wr = IO.pipe
       Process.fork do
         rd.close
-        system('docker run -d -p 8887:8888 -p 8499:8500 --link hoverfly:hoverfly  --name hoverfly_2 hoverfly')
+        system('docker run -d -p 8887:8888 -p 8499:8500 --link hoverfly:hoverfly  --name hoverfly_2 azohra/hoverfly')
         Hoverfly.set_ports(admin: 8887, proxy: 8499)
         Hoverfly.import(['./spec/support/test_simulations/test.json'])
         Hoverfly.middleware(remote: 'http://172.17.0.2:8500/middleware')

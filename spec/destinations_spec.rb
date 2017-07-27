@@ -1,6 +1,4 @@
-require_relative 'spec_helper'
-
-describe 'The Hoverfly API' do
+describe 'The Hoverfly API', order: :defined do
   context 'Destinations' do
     it 'Can update the destination' do
       expect(Hoverfly.update_destination('/test')).to eql('{"destination":"/test"}')
