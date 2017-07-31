@@ -4,12 +4,12 @@ class Hoverfly
   class << self
     attr_reader :admin_port, :proxy_port
 
-    def set_ports(admin:, proxy:)
+    def set_ports(admin:, proxy:, ip: 'localhost')
       @admin_port = admin
       @proxy_port = proxy
       HoverflyAPI.default_options.update(verify: false)
       HoverflyAPI.format :json
-      HoverflyAPI.base_uri "http://localhost:#{@admin_port}"
+      HoverflyAPI.base_uri "http://#{ip}:#{@admin_port}"
     end
 
     def middleware(middleware_location)

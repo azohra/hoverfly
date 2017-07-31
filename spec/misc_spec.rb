@@ -1,5 +1,3 @@
-require_relative 'spec_helper'
-
 describe 'The Hoverfly API' do
   context 'Misc Info' do
     it 'Returns the middleware being used' do

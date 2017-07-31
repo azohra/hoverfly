@@ -1,6 +1,4 @@
-require_relative 'spec_helper'
-
-describe 'The Hoverfly API' do
+describe 'The Hoverfly API', order: :defined do
   context 'Modes' do
     it 'Can update the mode' do
       expect(Hoverfly.update_mode('modify')).to eql('{"mode":"modify","arguments":{}}')
