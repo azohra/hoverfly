@@ -1,4 +1,5 @@
 # Hoverfly Gem
+[![Build Status](https://travis-ci.org/azohra/hoverfly.svg?branch=master)](https://travis-ci.org/azohra/hoverfly)
 
 Welcome to the Hoverfly Gem, a ruby written wrapper for Hoverfly!
 

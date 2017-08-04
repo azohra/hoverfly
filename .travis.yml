@@ -1,0 +1,9 @@
+sudo: require
+language: ruby
+rvm:
+  - 2.4.1
+services:
+  - docker
+script:
+  - bundle install
+  - bundle exec rspec
